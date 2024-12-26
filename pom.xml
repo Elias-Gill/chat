@@ -69,6 +69,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
+                <mainClass>com.chat.App</mainClass>
               </manifest>
             </archive>
           </configuration>
@@ -96,23 +97,35 @@
           <artifactId>formatter-maven-plugin</artifactId>
           <version>2.23.0</version>
         </plugin>
-        <!-- assembly plugin for single binary compilation -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.7.1</version>
-          <configuration>
-            <descriptorRefs>
-              <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
-            <archive>
-              <manifest>
-                <mainClass>com.chat.app.App</mainClass>
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <!-- assembly plugin for single binary compilation -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.7.1</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.chat.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 </project>

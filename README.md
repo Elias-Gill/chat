@@ -1,7 +1,7 @@
 This project has a `Makefile` to run the project.
 
 ```bash
-make run
+make compile
 make test
 make format
 ```

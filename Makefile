@@ -1,7 +1,7 @@
 .PHONY: run test
 
 compile:
-	mvn clean assembly:single
+	mvn clean package
 
 test:
 	mvn test

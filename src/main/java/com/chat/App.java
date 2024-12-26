@@ -1,4 +1,4 @@
-package com.chat.app;
+package com.chat;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;

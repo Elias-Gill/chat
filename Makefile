@@ -1,7 +1,7 @@
 .PHONY: run test
 
-run:
-	mvn compile exec:java -Dexec.mainClass=com.chat.app.App
+compile:
+	mvn clean assembly:single
 
 test:
 	mvn test

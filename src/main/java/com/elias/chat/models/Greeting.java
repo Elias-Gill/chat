@@ -1,4 +1,4 @@
-package com.elias.chat;
+package com.elias.chat.models;
 
 public class Greeting {
 

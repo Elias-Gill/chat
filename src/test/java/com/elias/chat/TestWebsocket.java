@@ -1,16 +1,18 @@
 package com.elias.chat;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
+import com.elias.chat.models.Greeting;
+import com.elias.chat.models.HelloMessage;
 
-import java.util.ArrayList;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import org.junit.Before;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,7 +53,7 @@ public class TestWebsocket {
         stompSession.send("/app/hello", new HelloMessage(msg));
 
         Greeting greetings = completableFuture.get(10, SECONDS);
-        Assert.assertEquals("Hello, " + msg+"!", greetings.getContent());
+        Assert.assertEquals("Hello, " + msg + "!", greetings.getContent());
     }
 
     private List<Transport> createTransportClient() {

@@ -1,8 +1,6 @@
 package com.elias.chat;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import com.elias.chat.models.Greeting;
-import com.elias.chat.models.HelloMessage;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -28,11 +26,14 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+import com.elias.chat.models.ChatMessage;
+import com.elias.chat.models.ServerResponse;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TestWebsocket {
     private String URL;
-    private CompletableFuture<Greeting> completableFuture;
+    private CompletableFuture<ServerResponse> completableFuture;
 
     @Before
     public void setup() {
@@ -49,11 +50,11 @@ public class TestWebsocket {
         }).get(1, SECONDS);
 
         String msg = "hola desde test";
-        stompSession.subscribe("/topic/greetings", new CreateGameStompFrameHandler());
-        stompSession.send("/app/hello", new HelloMessage(msg));
+        stompSession.subscribe("/notifications/greetings", new CreateGameStompFrameHandler());
+        stompSession.send("/chat/hello", new ChatMessage(msg));
 
-        Greeting greetings = completableFuture.get(10, SECONDS);
-        Assert.assertEquals("Hello, " + msg + "!", greetings.getContent());
+        ServerResponse greetings = completableFuture.get(10, SECONDS);
+        Assert.assertEquals("Hello, " + msg + "!", greetings.getMessage());
     }
 
     private List<Transport> createTransportClient() {
@@ -65,12 +66,12 @@ public class TestWebsocket {
     private class CreateGameStompFrameHandler implements StompFrameHandler {
         @Override
         public Type getPayloadType(StompHeaders stompHeaders) {
-            return Greeting.class;
+            return ServerResponse.class;
         }
 
         @Override
         public void handleFrame(StompHeaders stompHeaders, Object o) {
-            completableFuture.complete((Greeting) o);
+            completableFuture.complete((ServerResponse) o);
         }
     }
 }

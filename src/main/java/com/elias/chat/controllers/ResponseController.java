@@ -7,17 +7,17 @@ import org.springframework.web.util.HtmlUtils;
 import com.elias.chat.models.*;
 
 @Controller
-public class GreetingController {
+public class ResponseController {
 
     @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
-        System.out.println("New message recieved: " + message.getName());
+    @SendTo("/notifications/greetings")
+    public ServerResponse greeting(ChatMessage message) throws Exception {
+        System.out.println("New message recieved: " + message.getContent());
 
-        String response = "Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!";
+        String response = "Hello, " + HtmlUtils.htmlEscape(message.getContent()) + "!";
         System.out.println("Server Response: " + response);
 
         Thread.sleep(200); // simulated delay
-        return new Greeting(response);
+        return new ServerResponse(response);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.util.HtmlUtils;
 import com.elias.chat.models.*;
 
 @Controller
-public class ResponseController {
+public class WebsocketController {
 
     @MessageMapping("/hello")
     @SendTo("/notifications/greetings")

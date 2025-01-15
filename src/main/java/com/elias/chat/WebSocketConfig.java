@@ -1,8 +1,6 @@
 package com.elias.chat;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -22,15 +20,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws"); // raw websocket broker
         registry.addEndpoint("/sockJs").withSockJS(); // sockJs broker
-    }
-
-    @Bean
-    public FilterRegistrationBean<SecurityConfig> securityFilter(
-            SecurityConfig customAuthenticationFilter) {
-        FilterRegistrationBean<SecurityConfig> registrationBean = new FilterRegistrationBean<>();
-
-        registrationBean.setFilter(customAuthenticationFilter);
-        registrationBean.addUrlPatterns("/*"); // Apply filter only to specific paths
-        return registrationBean;
     }
 }

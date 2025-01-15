@@ -27,13 +27,13 @@ import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import com.elias.chat.models.ChatMessage;
-import com.elias.chat.models.ServerResponse;
+import com.elias.chat.models.User;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TestWebsocket {
     private String URL;
-    private CompletableFuture<ServerResponse> completableFuture;
+    private CompletableFuture<User> completableFuture;
 
     @Before
     public void setup() {
@@ -51,9 +51,9 @@ public class TestWebsocket {
 
         String msg = "hola desde test";
         stompSession.subscribe("/notifications/greetings", new CreateGameStompFrameHandler());
-        stompSession.send("/chat/hello", new ChatMessage(msg));
+        stompSession.send("/chat/hello", new ChatMessage());
 
-        ServerResponse greetings = completableFuture.get(10, SECONDS);
+        User greetings = completableFuture.get(10, SECONDS);
         Assert.assertEquals("Hello, " + msg + "!", greetings.getMessage());
     }
 

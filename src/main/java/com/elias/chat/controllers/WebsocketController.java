@@ -10,14 +10,14 @@ import com.elias.chat.models.*;
 public class WebsocketController {
 
     @MessageMapping("/hello")
-    @SendTo("/notifications/greetings")
-    public ServerResponse greeting(ChatMessage message) throws Exception {
+    @SendTo("/notifications/")
+    public ChatMessage greeting(ChatMessage message) throws Exception {
         System.out.println("New message recieved: " + message.getContent());
 
         String response = "Hello, " + HtmlUtils.htmlEscape(message.getContent()) + "!";
         System.out.println("Server Response: " + response);
 
         Thread.sleep(200); // simulated delay
-        return new ServerResponse(response);
+        return new ChatMessage();
     }
 }

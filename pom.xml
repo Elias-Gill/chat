@@ -59,6 +59,14 @@
       <version>3.0.2</version> <!-- Use the latest version -->
     </dependency>
 
+    <!-- app web -->
+    <dependency>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-web-api</artifactId>
+        <version>10.0.0</version>
+        <scope>provided</scope>
+    </dependency>
+
     <!-- testing dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

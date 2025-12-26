@@ -10,12 +10,16 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Find a user by email
     Optional<User> findByEmail(String email);
 
-    // Find all users by online status
+    Optional<User> findByUsername(String username);
+
     List<User> findByOnline(boolean online);
 
-    // Find users by name (case-insensitive search)
-    List<User> findByNameContainingIgnoreCase(String name);
+    boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
+
+    // NOTE: Save a new user (inherited from JpaRepository)
+    // No need to explicitly define it, as JpaRepository provides save() method
 }

@@ -5,27 +5,41 @@ import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.elias.chat.models.User;
 import com.elias.chat.repositories.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/app")
-public class HttpController {
+@RequestMapping("/user")
+public class Authentication {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
-    public String mainPage() {
-        return "index.html";
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        if (this.userRepository.existsByEmail(user.getEmail())) {
+            return ResponseEntity.status(400).body("Email already in use");
+        }
+
+        if (this.userRepository.existsByUsername(user.getName())) {
+            return ResponseEntity.status(400).body("Username already in use");
+        }
+
+        user.setPassword(PasswordEncoder.(user.getPassword());
+        userRepository.save(user);
+
+        return ResponseEntity.status(200).body("");
     }
 
     @GetMapping("/login")
-    public ResponseEntity<Token> getRequestInfo(HttpServletRequest request) {
+    public ResponseEntity<String> loginUser(HttpServletRequest request) {
         // Get the Authorization header
         String authHeader = request.getHeader("Authorization");
 
@@ -41,20 +55,14 @@ public class HttpController {
             String password = parts[1];
             // TODO: compare password and generate token
 
-            return ResponseEntity.ok(new Token());
+            return ResponseEntity.ok(this.generateToken());
         }
 
         return ResponseEntity.badRequest().build();
     }
 
-    // TODO: properly generate the jwt token
-    private class Token {
-        @SuppressWarnings("unused")
-        public String jwt;
-
-        public Token() {
-            // FIX: generate a real jwt token
-            this.jwt = "123";
-        }
+    // FIX: generate a real jwt token
+    public String generateToken() {
+        return "123";
     }
 }
